@@ -25,6 +25,11 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
 
+    # This is a one-to-many relationship
+    # A puppy can have many toys
+    # toys = db.relationship('Toy',backref='puppy',lazy='dynamic')
+    user_id = db.relationship('UserDetails',backref='User',lazy='dynamic')
+
     def __init__(self, email, username, password):
         self.email = email
         self.username = username
@@ -33,3 +38,22 @@ class User(db.Model, UserMixin):
     def check_password(self,password):
         # https://stackoverflow.com/questions/23432478/flask-generate-password-hash-not-constant-output
         return check_password_hash(self.password_hash,password)
+
+
+class UserDetails(db.Model):
+    # Create a table in the db
+    __tablename__ = 'users_details'
+
+    id = db.Column(db.Integer, primary_key = True)
+    # Connect the toy to the puppy that owns it.
+    # We use puppies.id because __tablename__='puppies'
+    # puppy_id = db.Column(db.Integer,db.ForeignKey('puppies.id'))
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+
+    image_url = db.Column(db.String(128), unique=True, index=True)
+    datetime = db.Column(db.String(128))
+
+    def __init__(self,user_id,image_url, datetime):
+        self.user_id=user_id
+        self.image_url=image_url
+        self.datetime=datetime

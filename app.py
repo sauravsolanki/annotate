@@ -23,6 +23,16 @@ def logout():
     flash('You logged out!')
     return redirect(url_for('home'))
 
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    return render_template('dashboard.htm')
+
+@app.route('/annotate_tool')
+@login_required
+def annotate_tool():
+    return render_template('annotate_tool.htm')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -31,7 +41,7 @@ def login():
     if form.validate_on_submit():
         # Grab the user from our User Models table
         user = User.query.filter_by(email=form.email.data).first()
-        
+
         # Check that the user was supplied and the password is right
         # The verify_password method comes from the User object
         # https://stackoverflow.com/questions/2209755/python-operation-vs-is-not
