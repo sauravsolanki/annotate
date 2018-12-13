@@ -2,7 +2,7 @@ from myproject import app,db
 from flask import render_template, redirect, request, url_for, flash,abort
 from flask_login import login_user,login_required,logout_user
 from myproject.models import User
-from myproject.forms import LoginForm, RegistrationForm
+from myproject.forms import LoginForm, RegistrationForm,Save
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -31,7 +31,17 @@ def dashboard():
 @app.route('/annotate_tool')
 @login_required
 def annotate_tool():
-    return render_template('annotate_tool.htm')
+    form=Save()
+    if form.validate_on_submit():
+        # enter the data into table
+        # user_details = UserDetails(<parameter>)
+        # db.session.add(user_details)
+        # db.session.commit()
+        # flash('Thanks for registering! Now you can login!')
+
+        data_saved=1
+        return render_template('abc.htm')
+    return render_template('annotation_home.htm',form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])

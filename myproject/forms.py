@@ -25,3 +25,6 @@ class RegistrationForm(FlaskForm):
         # Check if not None for that username!
         if User.query.filter_by(username=field.data).first():
             raise ValidationError('Sorry, that username is taken!')
+
+class Save(FlaskForm):
+    submit=SubmitField('Please Save')            

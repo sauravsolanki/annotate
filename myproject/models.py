@@ -28,7 +28,7 @@ class User(db.Model, UserMixin):
     # This is a one-to-many relationship
     # A puppy can have many toys
     # toys = db.relationship('Toy',backref='puppy',lazy='dynamic')
-    user_id = db.relationship('UserDetails',backref='User',lazy='dynamic')
+    user_id = db.relationship('UserDetails',backref='User',lazy=True)
 
     def __init__(self, email, username, password):
         self.email = email
@@ -43,6 +43,8 @@ class User(db.Model, UserMixin):
 class UserDetails(db.Model):
     # Create a table in the db
     __tablename__ = 'users_details'
+
+    users=db.relationship(User)
 
     id = db.Column(db.Integer, primary_key = True)
     # Connect the toy to the puppy that owns it.

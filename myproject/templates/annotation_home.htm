@@ -1,0 +1,13 @@
+{% extends 'annotation_base.htm' %}
+{% block content %}
+html.push('</div>'); // end of user_input div
+html.push('<div class="user_confirm">' +
+          '<span class="ok">' +
+          '<button id="user_input_ok_button" onclick="user_input_parse_and_invoke_handler()"> <form>{{ form.submit() }}</form> </button></span>' +
+          '<span class="cancel">' +
+          '<button id="user_input_cancel_button" onclick="user_input_cancel_handler()">CANCEL</button></span></div>');
+c.innerHTML = html.join('');
+p.innerHTML = '';
+p.appendChild(c);
+
+{% endblock %}
